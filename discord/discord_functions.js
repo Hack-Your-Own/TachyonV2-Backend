@@ -78,7 +78,7 @@ app.post('/convertNameToID', async (req, res) => {
 	return res.send(result);
 });
 
-app.post('/getAllUsers', async (req, res) => {
+app.get('/getAllUsers', async (req, res) => {
 	const result = await getAllUsers();
 	// console.log(result);
 
