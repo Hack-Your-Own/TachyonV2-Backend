@@ -116,4 +116,4 @@ dist
 .pnp.*
 
 credentials.json
-token.json
+sheets_key.json
