@@ -19,7 +19,9 @@
   },
   "homepage": "https://github.com/Hack-Your-Own/TachyonV2#readme",
   "dependencies": {
+    "common-tags": "^1.8.0",
     "cors": "^2.8.5",
+    "discord.js": "^12.2.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "googleapis": "^59.0.0",

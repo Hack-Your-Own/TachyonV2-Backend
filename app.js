@@ -10,6 +10,7 @@ const fs = require('fs');
 const readline = require('readline');
 const { google } = require('googleapis');
 const { GoogleAuth } = require('google-auth-library');
+const discord = require('./discord/discord_functions');
 
 
 
@@ -163,6 +164,9 @@ const user_schema = {
 // Enables cors support
 const cors = require('cors');
 app.use(cors());
+
+app.use('/discord', discord);
+
 
 app.get('/', function (req, res) {
   res.send('Hello world');
@@ -382,7 +386,7 @@ app.get('/addLatestUser', function(req, res) {
 
 connectDb().then(async () => {
     app.listen(process.env.PORT, () =>
-        console.log(`Example app listening on port ${process.env.PORT}!`),
+        console.log(`App listening on port ${process.env.PORT}!`),
     );
 });
 
