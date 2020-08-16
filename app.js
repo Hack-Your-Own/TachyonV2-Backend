@@ -244,10 +244,10 @@ app.get('/addAllUsers', function (req, res) {
             // Remove the "ID: " to clean the id
             if (uncleanID.title === 'Success') {
               // If the name was successfully converted
-              jsson['discord_id'] = uncleanID.message.replace('ID: ', '');
+              jsoon['discord_id'] = uncleanID.message.replace('ID: ', '');
             } else {
               // If not then set it an empty string.
-              jsson['discord_id'] = '';
+              jsoon['discord_id'] = '';
             }
 
             // Pick header that corresponds to each column
