@@ -1,6 +1,7 @@
 # GETTING STARTED
 
-- Remove `preinstall` script in `package.json` add it after you install. We need this script for deployment.
+- **DO NOT PERMANENTLY DELETE THE PREINSTALL LINE IN PACKAGE.JSON**
+- Anytime you need to run a yarn operation like `install` or `add`, **TEMPORARILY** delete the preinstall line, add anything you need from yarn, then **paste the preinstall line back exactly how it was**. We need this line for production purposes.
 - Run `yarn install`
 - Get **sheets_key.json** and **.env** from the Discord or inside the Drive **(HYO/Engineering/Tachyon/Creds and env)** and copy them into the root folder
 - **Make sure the .env has the DOT at the beginning, sometimes downloading it from Drive messes with the filename**
