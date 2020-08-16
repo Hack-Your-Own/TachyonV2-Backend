@@ -157,7 +157,9 @@ const user_schema = {
     { name: "commit_agreement", type: "boolean",  isArray: false },
     { name: "team_agreement",   type: "string",   isArray: false }, //bullet option with other ______ 
     { name: "rules_agreement",  type: "boolean",  isArray: false },
-    { name: "tips",             type: "string",   isArray: false }
+    { name: "tips",             type: "string",   isArray: false },
+    { name: "discord_id",       type: "string",   isArray: false },
+    { name: "team_name",        type: "string",   isArray: false }
   ],
 };
 
