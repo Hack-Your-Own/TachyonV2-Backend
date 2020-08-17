@@ -1,8 +1,13 @@
 const express = require('express');
 const app = express();
 const connectDb = () => {
-    return mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
+	return mongoose.connect(process.env.DB_URL, {
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+		useCreateIndex: true,
+	});
 };
+const Student = require('../models/student');
 
 const deleteTeam = require('./functions/deleteTeam');
 const createTeam = require('./functions/createTeam');
@@ -10,6 +15,7 @@ const addMember = require('./functions/addMember');
 const removeMember = require('./functions/removeMember');
 const convertNameToID = require('./functions/convertNameToID');
 const getAllUsers = require('./functions/getAllUsers');
+const { updateOne } = require('../models/student');
 
 require('dotenv').config();
 
@@ -26,6 +32,20 @@ app.post('/createTeam', async (req, res) => {
 	}
 
 	const result = await createTeam(teamName, memberList);
+
+	if (result.success) {
+		memberList.forEach(async (tag) => {
+			const id_rough = await convertNameToID(tag);
+			if (id_rough.title === 'Success') {
+				const id_clean=  id_rough.message.split(':')[1].trim();
+				const student = await Student.findOne( { "discord_id" : id_clean } );
+				student.updateOne({ "team_name": "Team " + teamName }).then((updated) => {
+					console.log(updated);
+				})
+			}
+		});
+	}
+	
 	// console.log(result);
 
 	return res.send(result);

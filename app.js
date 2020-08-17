@@ -204,7 +204,7 @@ app.get('/addAllUsers', function (req, res) {
     sheets.spreadsheets.values.get(
       {
         spreadsheetId: '1s_YEDpl9fBMEhYTdMx9xA3CNzsYY1F68mzlCIzX1leU',
-        range: 'Form Responses 7!$A$1:$YY',
+        range: 'Form Responses 9!$A$1:$YY',
       },
       async (err, res) => {
         if (err) res.send('The API returned an error: ' + err);
@@ -238,6 +238,7 @@ app.get('/addAllUsers', function (req, res) {
             // This is why we manually add both to the final "jsoon"
             jsoon['timestamp'] = allData[r][0];
             jsoon['email'] = allData[r][1];
+            jsoon['team_name'] = "";
 
             // Get the name and then call convert name to id so then we can convert name into id
             const uncleanID = await convertNameToID(allData[r][2]);
@@ -311,7 +312,7 @@ app.get('/addLatestUser', function (req, res) {
     sheets.spreadsheets.values.get(
       {
         spreadsheetId: '1s_YEDpl9fBMEhYTdMx9xA3CNzsYY1F68mzlCIzX1leU',
-        range: 'Form Responses 7!$A$1:$YY',
+        range: 'Form Responses 9!$A$1:$YY',
       },
       async (err, res) => {
         if (err) {
