@@ -159,8 +159,17 @@ const studentSchema = new mongoose.Schema(
     //31
     tips: {
         type: String,
-    }
+    },
 
+    //32
+    discord_id: {
+        type: String,
+    },
+
+    //33
+    team_name: {
+        type: String,
+    }
   },
   { timestamps: true },
 );
