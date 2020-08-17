@@ -313,7 +313,7 @@ app.get('/addLatestUser', function (req, res) {
         spreadsheetId: '1s_YEDpl9fBMEhYTdMx9xA3CNzsYY1F68mzlCIzX1leU',
         range: 'Form Responses 7!$A$1:$YY',
       },
-      (err, res) => {
+      async (err, res) => {
         if (err) {
           console.log('sheets err');
           res.send('The Sheets API returned an error: ' + err);
@@ -349,6 +349,17 @@ app.get('/addLatestUser', function (req, res) {
           // This is why we manually add both to the final "jsoon"
           jsoon['timestamp'] = allData[r][0];
           jsoon['email'] = allData[r][1];
+
+          // Get the name and then call convert name to id so then we can convert name into id
+          const uncleanID = await convertNameToID(allData[r][2]);
+          // Remove the "ID: " to clean the id
+          if (uncleanID.title === 'Success') {
+            // If the name was successfully converted
+            jsoon['discord_id'] = uncleanID.message.replace('ID: ', '');
+          } else {
+            // If not then set it an empty string.
+            jsoon['discord_id'] = '';
+          }
 
           // Pick header that corresponds to each column
           // Split header into text and question number

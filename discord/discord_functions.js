@@ -1,5 +1,8 @@
 const express = require('express');
 const app = express();
+const connectDb = () => {
+    return mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
+};
 
 const deleteTeam = require('./functions/deleteTeam');
 const createTeam = require('./functions/createTeam');
