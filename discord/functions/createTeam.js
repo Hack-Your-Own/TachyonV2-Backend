@@ -23,10 +23,10 @@ async function createTeam(teamName, memList) {
 		});
 
 		// send a dm to all team members
-		memList.forEach(async (tag) => {
+		memList.forEach(async (id) => {
 			(
 				await guild.members.cache
-					.find((member) => member.user.tag == tag)
+					.find((member) => member.user.id === id)
 					.roles.add(role)
 			).send(`You have been added to ${teamName}!`);
 		});
