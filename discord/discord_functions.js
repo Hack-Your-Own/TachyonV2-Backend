@@ -1,8 +1,7 @@
 const express = require('express');
 const app = express();
-const starbsURL = "mongodb://HYOStaff:Tachyon12@hyo-test-shard-00-00.q9jae.gcp.mongodb.net:27017,hyo-test-shard-00-01.q9jae.gcp.mongodb.net:27017,hyo-test-shard-00-02.q9jae.gcp.mongodb.net:27017/HYO?ssl=true&replicaSet=atlas-cql4w5-shard-0&authSource=admin&retryWrites=true&w=majority"
 const connectDb = () => {
-	return mongoose.connect(starbsURL, {
+	return mongoose.connect(process.env.DB_URL, {
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
 		useCreateIndex: true,
