@@ -193,10 +193,10 @@ app.get('/test', function (req, res) {
 
 app.get('/addAllUsers', function (req, res) {
   // Authorize a client with credentials, then call the Google Sheets API.
-  fs.readFile('credentials.json', (err, content) => {
-    if (err) res.send('Error loading client secret file:', err);
-    authorize(JSON.parse(content), getAllResponses);
-  });
+  // fs.readFile('credentials.json', (err, content) => {
+  //   if (err) res.send('Error loading client secret file:', err);
+  //   authorize(JSON.parse(content), getAllResponses);
+  // });
 
   // Get all data, including headers, from sheet
   function getAllResponses(auth) {
@@ -238,7 +238,7 @@ app.get('/addAllUsers', function (req, res) {
             // This is why we manually add both to the final "jsoon"
             jsoon['timestamp'] = allData[r][0];
             jsoon['email'] = allData[r][1];
-            jsoon['team_name'] = "";
+            jsoon['team_name'] = '';
 
             // Get the name and then call convert name to id so then we can convert name into id
             const uncleanID = await convertNameToID(allData[r][2]);
@@ -297,7 +297,20 @@ app.get('/addAllUsers', function (req, res) {
     );
     res.send('All data inserted');
   }
+  try {
+    getAuthToken().then((auth) => {
+      getAllResponses(auth);
+    });
+  } catch (error) {
+    console.log(error.message, error.stack);
+  }
 });
+
+app.get('/clear', function (req, res) {
+  Student.deleteMany({}).then(() => {
+    res.send("Cleared");
+  })
+})
 
 app.get('/addLatestUser', function (req, res) {
   // Authorize a client with credentials, then call the Google Sheets API.
