@@ -16,7 +16,6 @@ const addMember = require('./functions/addMember');
 const removeMember = require('./functions/removeMember');
 const convertNameToID = require('./functions/convertNameToID');
 const getAllUsers = require('./functions/getAllUsers');
-const { updateOne } = require('../models/student');
 
 require('dotenv').config();
 
