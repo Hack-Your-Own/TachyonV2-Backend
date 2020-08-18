@@ -1,13 +1,15 @@
 const express = require('express');
 const app = express();
+const starbsURL = "mongodb://HYOStaff:Tachyon12@hyo-test-shard-00-00.q9jae.gcp.mongodb.net:27017,hyo-test-shard-00-01.q9jae.gcp.mongodb.net:27017,hyo-test-shard-00-02.q9jae.gcp.mongodb.net:27017/HYO?ssl=true&replicaSet=atlas-cql4w5-shard-0&authSource=admin&retryWrites=true&w=majority"
 const connectDb = () => {
-	return mongoose.connect(process.env.DB_URL, {
+	return mongoose.connect(starbsURL, {
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
 		useCreateIndex: true,
 	});
 };
 const Student = require('../models/student');
+const Team = require('../models/team');
 
 const deleteTeam = require('./functions/deleteTeam');
 const createTeam = require('./functions/createTeam');
@@ -40,6 +42,15 @@ app.post('/createTeam', async (req, res) => {
 				const id_clean=  id_rough.message.split(':')[1].trim();
 				const student = await Student.findOne( { "discord_id" : id_clean } );
 				student.updateOne({ "team_name": "Team " + teamName }).then((updated) => {
+					console.log(updated);
+				})
+				let team_members = [];
+				team_members.push(student._id);
+				const team_data = {
+					name: teamName,
+					members: team_members
+				}
+				Team.create(team_data).then((updated) => {
 					console.log(updated);
 				})
 			}
