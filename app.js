@@ -1,4 +1,5 @@
 require('dotenv').config();
+var bodyParser = require('body-parser');
 const express = require('express');
 const app = express();
 const Student = require('./models/student');
@@ -15,6 +16,8 @@ const readline = require('readline');
 const { google } = require('googleapis');
 const { GoogleAuth } = require('google-auth-library');
 const discord = require('./discord/discord_functions');
+const ObjectId = mongoose.Types.ObjectId;
+mongoose.set('useFindAndModify', false);
 
 const convertNameToID = require('./discord/functions/convertNameToID');
 
@@ -26,6 +29,12 @@ const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
 // created automatically when the authorization flow completes for the first
 // time.
 const TOKEN_PATH = 'token.json';
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// parse application/json
+app.use(bodyParser.json());
 
 /**
  * Create an OAuth2 client with the given credentials, and then execute the
@@ -421,6 +430,18 @@ app.get('/addLatestUser', function (req, res) {
   } catch (error) {
     console.log(error.message, error.stack);
   }
+});
+
+app.post('/updateUser', async function(req, res) {
+  Student.findOneAndUpdate(
+    {_id: mongoose.Types.ObjectId(req.body._id)},
+    req.body,
+    {upsert: true, new: true, runValidators: true}, // options
+    function (err, updatedStudent) { // callback
+      if (err) console.log('ERROR updating: '+ err);
+      else res.json(updatedStudent)
+    }
+  )
 });
 
 connectDb().then(async () => {
